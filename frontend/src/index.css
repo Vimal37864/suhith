@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-background: #f4f7fe;
+  --color-surface: #ffffff;
+  --color-sidebar: #0b1437;
+  --color-primary: #3b82f6;
+  --color-text-main: #2b3674;
+  --color-text-muted: #a3aed1;
+  --font-sans: 'Inter', sans-serif;
+  --font-orbitron: 'Orbitron', sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-slate-800 antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.dashboard-card {
+  @apply bg-white rounded-2xl shadow-sm border border-slate-100;
+}
+
+.orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+

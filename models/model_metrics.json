@@ -1,0 +1,152 @@
+{
+  "Random Forest": {
+    "accuracy": 0.913,
+    "precision": 0.914,
+    "recall": 0.913,
+    "f1_score": 0.9131,
+    "confusion_matrix": [
+      [
+        311,
+        0,
+        39
+      ],
+      [
+        0,
+        635,
+        69
+      ],
+      [
+        17,
+        49,
+        880
+      ]
+    ],
+    "target_names": [
+      "High Risk",
+      "Low Risk",
+      "Medium Risk"
+    ]
+  },
+  "XGBoost": {
+    "accuracy": 0.9085,
+    "precision": 0.9093,
+    "recall": 0.9085,
+    "f1_score": 0.9086,
+    "confusion_matrix": [
+      [
+        310,
+        0,
+        40
+      ],
+      [
+        0,
+        634,
+        70
+      ],
+      [
+        21,
+        52,
+        873
+      ]
+    ],
+    "target_names": [
+      "High Risk",
+      "Low Risk",
+      "Medium Risk"
+    ]
+  },
+  "Decision Tree": {
+    "accuracy": 0.878,
+    "precision": 0.878,
+    "recall": 0.878,
+    "f1_score": 0.878,
+    "confusion_matrix": [
+      [
+        303,
+        0,
+        47
+      ],
+      [
+        0,
+        628,
+        76
+      ],
+      [
+        46,
+        75,
+        825
+      ]
+    ],
+    "target_names": [
+      "High Risk",
+      "Low Risk",
+      "Medium Risk"
+    ]
+  },
+  "feature_importance": [
+    {
+      "feature": "severity",
+      "importance": 0.2101
+    },
+    {
+      "feature": "weapon_used",
+      "importance": 0.1778
+    },
+    {
+      "feature": "suspect_prior_record",
+      "importance": 0.155
+    },
+    {
+      "feature": "crime_type",
+      "importance": 0.1239
+    },
+    {
+      "feature": "is_night",
+      "importance": 0.0816
+    },
+    {
+      "feature": "hour",
+      "importance": 0.0554
+    },
+    {
+      "feature": "longitude",
+      "importance": 0.0367
+    },
+    {
+      "feature": "latitude",
+      "importance": 0.0366
+    },
+    {
+      "feature": "time_period",
+      "importance": 0.0234
+    },
+    {
+      "feature": "month",
+      "importance": 0.0215
+    },
+    {
+      "feature": "area",
+      "importance": 0.019
+    },
+    {
+      "feature": "day_of_week",
+      "importance": 0.0186
+    },
+    {
+      "feature": "suspect_age_group",
+      "importance": 0.0168
+    },
+    {
+      "feature": "season",
+      "importance": 0.0127
+    },
+    {
+      "feature": "suspect_gender",
+      "importance": 0.0058
+    },
+    {
+      "feature": "is_weekend",
+      "importance": 0.0051
+    }
+  ]
+}

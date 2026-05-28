@@ -1,0 +1,114 @@
+{
+  "Random Forest": {
+    "accuracy": 0.913,
+    "precision": 0.914009050338479,
+    "recall": 0.913,
+    "f1_score": 0.9130653249180134,
+    "confusion_matrix": [
+      [
+        311,
+        0,
+        39
+      ],
+      [
+        0,
+        635,
+        69
+      ],
+      [
+        17,
+        49,
+        880
+      ]
+    ]
+  },
+  "XGBoost": {
+    "accuracy": 0.9085,
+    "precision": 0.9092852585091867,
+    "recall": 0.9085,
+    "f1_score": 0.9085570859480432,
+    "confusion_matrix": [
+      [
+        310,
+        0,
+        40
+      ],
+      [
+        0,
+        634,
+        70
+      ],
+      [
+        21,
+        52,
+        873
+      ]
+    ]
+  },
+  "feature_importance": [
+    {
+      "feature": "severity",
+      "importance": 0.2101
+    },
+    {
+      "feature": "weapon_used",
+      "importance": 0.1778
+    },
+    {
+      "feature": "suspect_prior_record",
+      "importance": 0.155
+    },
+    {
+      "feature": "crime_type",
+      "importance": 0.1239
+    },
+    {
+      "feature": "is_night",
+      "importance": 0.0816
+    },
+    {
+      "feature": "hour",
+      "importance": 0.0554
+    },
+    {
+      "feature": "longitude",
+      "importance": 0.0367
+    },
+    {
+      "feature": "latitude",
+      "importance": 0.0366
+    },
+    {
+      "feature": "time_period",
+      "importance": 0.0234
+    },
+    {
+      "feature": "month",
+      "importance": 0.0215
+    },
+    {
+      "feature": "area",
+      "importance": 0.019
+    },
+    {
+      "feature": "day_of_week",
+      "importance": 0.0186
+    },
+    {
+      "feature": "suspect_age_group",
+      "importance": 0.0168
+    },
+    {
+      "feature": "season",
+      "importance": 0.0127
+    },
+    {
+      "feature": "suspect_gender",
+      "importance": 0.0058
+    },
+    {
+      "feature": "is_weekend",
+      "importance": 0.0051
+    }
+  ]
+}

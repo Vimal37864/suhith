@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Crime Forecasting — Pattern Analysis & Suspect Prediction</title>
+  <meta name="description" content="AI-Powered Crime Pattern Forecasting and Suspect Prediction Framework using Machine Learning">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+</head>
+<body>
+
+  <!-- ═══ Navbar ═══ -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <div class="icon">🛡️</div>
+      <span>CRIME AI</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#overview" class="active">Overview</a></li>
+      <li><a href="#heatmap-section">Heatmap</a></li>
+      <li><a href="#analytics-section">Analytics</a></li>
+      <li><a href="#predict-section">Predict</a></li>
+      <li><a href="#performance-section">Models</a></li>
+    </ul>
+    <div class="nav-status">
+      <div class="dot"></div>
+      <span>System Online</span>
+    </div>
+  </nav>
+
+  <div class="main-container">
+
+    <!-- ═══ Hero ═══ -->
+    <section class="hero" id="overview">
+      <div class="hero-badge">🤖 Powered by Machine Learning</div>
+      <h1>AI-Powered Crime Pattern<br>Forecasting & Suspect Prediction</h1>
+      <p>Advanced machine learning framework analyzing crime patterns, forecasting high-risk zones, and generating suspect predictions for proactive law enforcement.</p>
+    </section>
+
+    <!-- ═══ Stats Cards ═══ -->
+    <div class="stats-grid">
+      <div class="stat-card animate-in">
+        <div class="stat-icon">📊</div>
+        <div class="stat-value" id="stat-total">0</div>
+        <div class="stat-label">Total Crime Records</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-icon">🚔</div>
+        <div class="stat-value" id="stat-arrest">0%</div>
+        <div class="stat-label">Arrest Rate</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-icon">⚠️</div>
+        <div class="stat-value" id="stat-highrisk">0%</div>
+        <div class="stat-label">High Risk Crimes</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-value" id="stat-accuracy">0%</div>
+        <div class="stat-label">Best Model Accuracy</div>
+      </div>
+    </div>
+
+    <!-- ═══ Crime Heatmap ═══ -->
+    <section id="heatmap-section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(34,211,238,0.15)">🗺️</div>
+        <h2>Crime Density Heatmap</h2>
+        <div class="line"></div>
+      </div>
+      <div class="glass-card full-width animate-in">
+        <div class="card-title">📍 Chennai Metropolitan Area <span class="badge">Live Data</span></div>
+        <div id="crime-map"></div>
+      </div>
+    </section>
+
+    <!-- ═══ Analytics Section ═══ -->
+    <section id="analytics-section" style="margin-top:2rem">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(168,85,247,0.15)">📈</div>
+        <h2>Crime Analytics</h2>
+        <div class="line"></div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Hourly -->
+        <div class="glass-card animate-in">
+          <div class="card-title">🕐 Hourly Crime Distribution <span class="badge">24h Pattern</span></div>
+          <div class="chart-container"><canvas id="hourlyChart"></canvas></div>
+        </div>
+        <!-- Daily -->
+        <div class="glass-card animate-in">
+          <div class="card-title">📅 Daily Crime Pattern</div>
+          <div class="chart-container"><canvas id="dailyChart"></canvas></div>
+        </div>
+        <!-- Monthly -->
+        <div class="glass-card animate-in">
+          <div class="card-title">📆 Monthly Trend</div>
+          <div class="chart-container"><canvas id="monthlyChart"></canvas></div>
+        </div>
+        <!-- Crime Type -->
+        <div class="glass-card animate-in">
+          <div class="card-title">🏷️ Crime Type Distribution</div>
+          <div class="chart-container"><canvas id="crimeTypeChart"></canvas></div>
+        </div>
+        <!-- Area -->
+        <div class="glass-card animate-in">
+          <div class="card-title">📍 Area-wise Analysis</div>
+          <div class="chart-container large"><canvas id="areaChart"></canvas></div>
+        </div>
+        <!-- Severity -->
+        <div class="glass-card animate-in">
+          <div class="card-title">🔴 Severity Distribution</div>
+          <div class="chart-container"><canvas id="severityChart"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Prediction Section ═══ -->
+    <section id="predict-section" style="margin-top:2rem">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(236,72,153,0.15)">🔮</div>
+        <h2>AI Predictions</h2>
+        <div class="line"></div>
+      </div>
+
+      <div class="prediction-section">
+        <!-- Crime Prediction -->
+        <div class="glass-card animate-in">
+          <div class="card-title">⚡ Crime Risk Prediction <span class="badge">3 Models</span></div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Crime Type</label>
+              <select id="pred-crime-type">
+                <option>Theft</option><option>Assault</option><option>Burglary</option>
+                <option>Robbery</option><option>Fraud</option><option>Vandalism</option>
+                <option>Drug Offense</option><option>Kidnapping</option>
+                <option>Cybercrime</option><option>Homicide</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Area</label>
+              <select id="pred-area">
+                <option>T. Nagar</option><option>Anna Nagar</option><option>Adyar</option>
+                <option>Velachery</option><option>Tambaram</option><option>Guindy</option>
+                <option>Mylapore</option><option>Egmore</option><option>Chromepet</option>
+                <option>Porur</option><option>Mamallapuram</option><option>Sholinganallur</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Hour (0-23)</label>
+              <input type="number" id="pred-hour" min="0" max="23" value="22">
+            </div>
+            <div class="form-group">
+              <label>Month (1-12)</label>
+              <input type="number" id="pred-month" min="1" max="12" value="6">
+            </div>
+            <div class="form-group">
+              <label>Day of Week</label>
+              <select id="pred-day">
+                <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+                <option>Thursday</option><option>Friday</option><option>Saturday</option>
+                <option>Sunday</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Suspect Age Group</label>
+              <select id="pred-age">
+                <option>18-25</option><option>26-35</option><option>36-45</option><option>46+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Suspect Gender</label>
+              <select id="pred-gender">
+                <option>Male</option><option>Female</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Prior Record</label>
+              <select id="pred-prior">
+                <option>No</option><option>Yes</option>
+              </select>
+            </div>
+            <div class="form-group" style="grid-column:1/-1">
+              <label>Weapon Used</label>
+              <select id="pred-weapon">
+                <option>None</option><option>Knife</option><option>Firearm</option><option>Blunt Object</option>
+              </select>
+            </div>
+            <button class="btn-predict crime-btn" id="btn-predict-crime" onclick="predictCrime()">
+              🔍 PREDICT RISK LEVEL
+            </button>
+          </div>
+          <div class="prediction-result" id="crime-prediction-result" style="margin-top:1rem">
+            <div class="empty-state">
+              <span style="font-size:2rem">🎯</span>
+              <span>Enter parameters and click predict</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Suspect Prediction -->
+        <div class="glass-card animate-in">
+          <div class="card-title">🕵️ Suspect Profile Prediction <span class="badge">AI Analysis</span></div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Crime Type</label>
+              <select id="sus-crime-type">
+                <option>Theft</option><option>Assault</option><option>Burglary</option>
+                <option>Robbery</option><option>Fraud</option><option>Vandalism</option>
+                <option>Drug Offense</option><option>Kidnapping</option>
+                <option>Cybercrime</option><option>Homicide</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Area</label>
+              <select id="sus-area">
+                <option>T. Nagar</option><option>Anna Nagar</option><option>Adyar</option>
+                <option>Velachery</option><option>Tambaram</option><option>Guindy</option>
+                <option>Mylapore</option><option>Egmore</option><option>Chromepet</option>
+                <option>Porur</option><option>Mamallapuram</option><option>Sholinganallur</option>
+              </select>
+            </div>
+            <div class="form-group" style="grid-column:1/-1">
+              <label>Hour of Incident (0-23)</label>
+              <input type="number" id="sus-hour" min="0" max="23" value="22">
+            </div>
+            <button class="btn-predict suspect-btn" id="btn-predict-suspect" onclick="predictSuspect()">
+              🕵️ ANALYZE SUSPECT PROFILE
+            </button>
+          </div>
+          <div class="prediction-result" id="suspect-prediction-result" style="margin-top:1rem">
+            <div class="empty-state">
+              <span style="font-size:2rem">🕵️</span>
+              <span>Enter crime parameters for suspect analysis</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Model Performance ═══ -->
+    <section id="performance-section" style="margin-top:2rem">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(16,185,129,0.15)">🏆</div>
+        <h2>Model Performance</h2>
+        <div class="line"></div>
+      </div>
+
+      <!-- Metric Cards -->
+      <div class="metrics-grid" style="margin-bottom:1.5rem">
+        <div class="metric-card animate-in" id="metric-card-0">
+          <div class="model-name">Random Forest</div>
+          <div class="metric-row"><span class="label">Accuracy</span><span class="value metric-accuracy">—</span></div>
+          <div class="metric-row"><span class="label">Precision</span><span class="value metric-precision">—</span></div>
+          <div class="metric-row"><span class="label">Recall</span><span class="value metric-recall">—</span></div>
+          <div class="metric-row"><span class="label">F1-Score</span><span class="value metric-f1_score">—</span></div>
+        </div>
+        <div class="metric-card animate-in" id="metric-card-1">
+          <div class="model-name">XGBoost</div>
+          <div class="metric-row"><span class="label">Accuracy</span><span class="value metric-accuracy">—</span></div>
+          <div class="metric-row"><span class="label">Precision</span><span class="value metric-precision">—</span></div>
+          <div class="metric-row"><span class="label">Recall</span><span class="value metric-recall">—</span></div>
+          <div class="metric-row"><span class="label">F1-Score</span><span class="value metric-f1_score">—</span></div>
+        </div>
+        <div class="metric-card animate-in" id="metric-card-2">
+          <div class="model-name">Decision Tree</div>
+          <div class="metric-row"><span class="label">Accuracy</span><span class="value metric-accuracy">—</span></div>
+          <div class="metric-row"><span class="label">Precision</span><span class="value metric-precision">—</span></div>
+          <div class="metric-row"><span class="label">Recall</span><span class="value metric-recall">—</span></div>
+          <div class="metric-row"><span class="label">F1-Score</span><span class="value metric-f1_score">—</span></div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Comparison Chart -->
+        <div class="glass-card animate-in">
+          <div class="card-title">📊 Model Comparison</div>
+          <div class="chart-container"><canvas id="modelComparisonChart"></canvas></div>
+        </div>
+        <!-- Feature Importance -->
+        <div class="glass-card animate-in">
+          <div class="card-title">🏅 Feature Importance <span class="badge">Random Forest</span></div>
+          <div class="chart-container"><canvas id="featureChart"></canvas></div>
+        </div>
+        <!-- Confusion Matrix -->
+        <div class="glass-card full-width animate-in">
+          <div class="card-title">🧮 Confusion Matrix <span class="badge">Random Forest</span></div>
+          <div id="confusionMatrix" style="max-width:500px;margin:0 auto">
+            <div class="loading-spinner"><div class="spinner"></div> Loading...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Footer ═══ -->
+    <footer class="footer">
+      <p>AI-Powered Crime Pattern Forecasting & Suspect Prediction Framework</p>
+      <p style="margin-top:4px">Department of Computer Science & Engineering — Dhanalakshmi Srinivasan College of Engineering and Technology, Mamallapuram</p>
+      <p style="margin-top:4px;color:var(--accent-cyan)">Sathya Jith K · Vimal Balaji V R · Praveen S · Guide: Mrs. K. Ajitha</p>
+    </footer>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
